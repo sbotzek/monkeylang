@@ -13,5 +13,5 @@ clj -M:test
 To start the repl:
 
 ```sh
- clj -M:repl
+clj -M:repl
 ```
