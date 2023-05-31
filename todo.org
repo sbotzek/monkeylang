@@ -1,0 +1,4 @@
+#+title: Todo
+#+startup: overview
+
+* NEW use spec or malli?
