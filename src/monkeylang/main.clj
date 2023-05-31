@@ -1,5 +1,6 @@
-(ns monkeylang.main)
+(ns monkeylang.main
+  (:require [monkeylang.lexer :as lexer]))
 
 (defn -main
   []
-  (println "Hello World!"))
+  (println "hello world"))
