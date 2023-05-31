@@ -13,8 +13,8 @@
 (defn- next-word-token
   "Converts the next word in the string to a token, and the rest of the string."
   [s]
-  (let [[word rest] (split-with #(Character/isLetter %) s)
-        word (str/lower-case (apply str word))]
+  (let [[word-chars rest] (split-with #(Character/isLetter %) s)
+        word (apply str word-chars)]
     (if-let [type (get keywords word)]
       [{:type type} rest]
       [{:type :identifier :literal word} rest])))
@@ -22,8 +22,8 @@
 (defn- next-int-token
   "Converts the next int in the string to a token, and the rest of the string."
   [s]
-  (let [[int rest] (split-with #(Character/isDigit %) s)
-        int (apply str int)]
+  (let [[int-chars rest] (split-with #(Character/isDigit %) s)
+        int (apply str int-chars)]
     [{:type :int :literal int} rest]))
 
 (def symbols
