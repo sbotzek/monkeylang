@@ -1,15 +1,5 @@
 (ns monkeylang.lexer
-  (:require [clojure.string :as str]
-            [clojure.core.match :refer [match]]))
-
-(match [3 3]
-       [0 0] "0 and 0"
-       [3 _] "3 and any")
-
-(match "wut"
-       [\w \u \t] "w and rest"
-       "wut" "got wut")
-
+  (:require [clojure.string :as str]))
 
 (def keywords
   {"let" :let
@@ -61,11 +51,9 @@
     (let [symbol (apply str symbol-chars)]
       (if-let [type (get symbols symbol)]
         [{:type type} rest]
-        (if (= 1 (count symbol-chars))
-          [{:type :illegal :literal symbol} rest]
-          (let [symbol-chars' (butlast symbol-chars)
-                rest' (conj rest (last symbol-chars))]
-            (recur [symbol-chars' rest'])))))))
+        (if-let [symbol-chars' (butlast symbol-chars)]
+          (recur [symbol-chars' (conj rest (last symbol-chars))])
+          [{:type :illegal :literal symbol} rest])))))
 
 (defn- next-token
   "Returns the next token in the string, and the rest of the string."
