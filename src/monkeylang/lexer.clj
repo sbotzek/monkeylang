@@ -11,7 +11,7 @@
    "return" :return})
 
 (defn- next-word-token
-  "Converts the next word in the string to a token, and the rest of the string."
+  "Returns: [next-token rest-of-string]"
   [s]
   (let [[word-chars rest] (split-with #(Character/isLetter %) s)
         word (apply str word-chars)]
@@ -20,7 +20,7 @@
       [{:type :identifier :literal word} rest])))
 
 (defn- next-int-token
-  "Converts the next int in the string to a token, and the rest of the string."
+  "Returns: [next-token rest-of-string]"
   [s]
   (let [[int-chars rest] (split-with #(Character/isDigit %) s)
         int (apply str int-chars)]
@@ -45,6 +45,7 @@
    "}" :rbrace})
 
 (defn- next-symbol-token
+  "Returns: [next-token rest-of-string]"
   [s]
   ;; greedily grab all symbols, then walk that back if we don't find a symbol token
   (loop [[symbol-chars rest] (split-with #(not (or (Character/isLetter %) (Character/isDigit %) (Character/isWhitespace %))) s)]
@@ -56,7 +57,7 @@
           [{:type :illegal :literal symbol} rest])))))
 
 (defn- next-token
-  "Returns the next token in the string, and the rest of the string."
+  "Returns: [next-token rest-of-string]"
   [s]
   (when (seq s)
     (let [[c & rest] s]
