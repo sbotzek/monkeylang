@@ -1,13 +1,7 @@
 (ns monkeylang.lexer-test
   (:require [monkeylang.lexer :refer [str->tokens]]
-            [clojure.data :as data]
+            [monkeylang.helpers :refer [is-no-diff]]
             [clojure.test :refer :all]))
-
-(defn is-no-diff
-  [expected result]
-  (let [[missing-from-result missing-from-expected in-both] (data/diff expected result)]
-    (is (empty? missing-from-result))
-    (is (empty? missing-from-expected))))
 
 (deftest lexer-tests
   (testing "List of symbols"
