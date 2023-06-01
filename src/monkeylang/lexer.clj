@@ -16,15 +16,15 @@
   (let [[word-chars rest] (split-with #(Character/isLetter %) s)
         word (apply str word-chars)]
     (if-let [type (get keywords word)]
-      [{:type type} rest]
-      [{:type :identifier :literal word} rest])))
+      [[type] rest]
+      [[:identifier word] rest])))
 
 (defn- next-int-token
   "Returns: [next-token rest-of-string]"
   [s]
   (let [[int-chars rest] (split-with #(Character/isDigit %) s)
         int (apply str int-chars)]
-    [{:type :int :literal int} rest]))
+    [[:int int] rest]))
 
 (def symbols
   {"=" :assign
@@ -51,10 +51,10 @@
   (loop [[symbol-chars rest] (split-with #(not (or (Character/isLetter %) (Character/isDigit %) (Character/isWhitespace %))) s)]
     (let [symbol (apply str symbol-chars)]
       (if-let [type (get symbols symbol)]
-        [{:type type} rest]
+        [[type] rest]
         (if-let [symbol-chars' (butlast symbol-chars)]
           (recur [symbol-chars' (conj rest (last symbol-chars))])
-          [{:type :illegal :literal symbol} rest])))))
+          [[:illegal symbol] rest])))))
 
 (defn- next-token
   "Returns: [next-token rest-of-string]"

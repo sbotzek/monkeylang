@@ -5,97 +5,97 @@
 
 (deftest lexer-tests
   (testing "List of symbols"
-    (is-no-diff [{:type :assign}
-                 {:type :plus}
-                 {:type :lparen}
-                 {:type :rparen}
-                 {:type :lbrace}
-                 {:type :rbrace}
-                 {:type :comma}
-                 {:type :semicolon}]
+    (is-no-diff [[:assign]
+                 [:plus]
+                 [:lparen]
+                 [:rparen]
+                 [:lbrace]
+                 [:rbrace]
+                 [:comma]
+                 [:semicolon]]
                 (str->tokens "=+(){},;")))
   (testing "Simple script"
-    (is-no-diff [{:type :let}
-                 {:type :identifier :literal "five"}
-                 {:type :assign}
-                 {:type :int :literal "5"}
-                 {:type :semicolon}
+    (is-no-diff [[:let]
+                 [:identifier "five"]
+                 [:assign]
+                 [:int "5"]
+                 [:semicolon]
 
-                 {:type :let}
-                 {:type :identifier :literal "ten"}
-                 {:type :assign}
-                 {:type :int :literal "10"}
-                 {:type :semicolon}
+                 [:let]
+                 [:identifier "ten"]
+                 [:assign]
+                 [:int "10"]
+                 [:semicolon]
 
-                 {:type :let}
-                 {:type :identifier :literal "add"}
-                 {:type :assign}
-                 {:type :fn}
-                 {:type :lparen}
-                 {:type :identifier :literal "x"}
-                 {:type :comma}
-                 {:type :identifier :literal "y"}
-                 {:type :rparen}
-                 {:type :lbrace}
-                 {:type :identifier :literal "x"}
-                 {:type :plus}
-                 {:type :identifier :literal "y"}
-                 {:type :semicolon}
-                 {:type :rbrace}
-                 {:type :semicolon}
+                 [:let]
+                 [:identifier "add"]
+                 [:assign]
+                 [:fn]
+                 [:lparen]
+                 [:identifier "x"]
+                 [:comma]
+                 [:identifier "y"]
+                 [:rparen]
+                 [:lbrace]
+                 [:identifier "x"]
+                 [:plus]
+                 [:identifier "y"]
+                 [:semicolon]
+                 [:rbrace]
+                 [:semicolon]
 
-                 {:type :let}
-                 {:type :identifier :literal "result"}
-                 {:type :assign}
-                 {:type :identifier :literal "add"}
-                 {:type :lparen}
-                 {:type :identifier :literal "five"}
-                 {:type :comma}
-                 {:type :identifier :literal "ten"}
-                 {:type :rparen}
-                 {:type :semicolon}
+                 [:let]
+                 [:identifier "result"]
+                 [:assign]
+                 [:identifier "add"]
+                 [:lparen]
+                 [:identifier "five"]
+                 [:comma]
+                 [:identifier "ten"]
+                 [:rparen]
+                 [:semicolon]
 
-                 {:type :bang}
-                 {:type :minus}
-                 {:type :slash}
-                 {:type :asterisk}
-                 {:type :int :literal "5"}
-                 {:type :semicolon}
+                 [:bang]
+                 [:minus]
+                 [:slash]
+                 [:asterisk]
+                 [:int "5"]
+                 [:semicolon]
 
-                 {:type :int :literal "5"}
-                 {:type :lt}
-                 {:type :int :literal "10"}
-                 {:type :gt}
-                 {:type :int :literal "5"}
-                 {:type :semicolon}
+                 [:int "5"]
+                 [:lt]
+                 [:int "10"]
+                 [:gt]
+                 [:int "5"]
+                 [:semicolon]
 
-                 {:type :if}
-                 {:type :lparen}
-                 {:type :int :literal "5"}
-                 {:type :lt}
-                 {:type :int :literal "10"}
-                 {:type :rparen}
-                 {:type :lbrace}
-                 {:type :return}
-                 {:type :true}
-                 {:type :semicolon}
-                 {:type :rbrace}
-                 {:type :else}
-                 {:type :lbrace}
-                 {:type :return}
-                 {:type :false}
-                 {:type :semicolon}
-                 {:type :rbrace}
+                 [:if]
+                 [:lparen]
+                 [:int "5"]
+                 [:lt]
+                 [:int "10"]
+                 [:rparen]
+                 [:lbrace]
+                 [:return]
+                 [:true]
+                 [:semicolon]
+                 [:rbrace]
+                 [:else]
+                 [:lbrace]
+                 [:return]
+                 [:false]
+                 [:semicolon]
+                 [:rbrace]
 
-                 {:type :int :literal "10"}
-                 {:type :eq}
-                 {:type :int :literal "10"}
-                 {:type :semicolon}
+                 [:int "10"]
+                 [:eq]
+                 [:int "10"]
+                 [:semicolon]
 
-                 {:type :int :literal "10"}
-                 {:type :not-eq}
-                 {:type :int :literal "9"}
-                 {:type :semicolon}
+                 [:int "10"]
+                 [:not-eq]
+                 [:int "9"]
+                 [:semicolon]
                  ]
                 (str->tokens
                  "let five = 5;
@@ -119,7 +119,7 @@
                   10 == 10;
                   10 != 9;")))
   (testing "Illegal symbol"
-    (is-no-diff [{:type :assign}
-                 {:type :illegal :literal "`"}
-                 {:type :assign}]
+    (is-no-diff [[:assign]
+                 [:illegal "`"]
+                 [:assign]]
                 (str->tokens "=`="))))
